@@ -24,6 +24,7 @@ npm install
 
 ## Local environment
 
+- [Local server](http://localhost:8080)
 
 <!-- jhipster-needle-localEnvironment -->
 
@@ -46,5 +47,6 @@ docker compose -f src/main/docker/postgresql.yml up -d
 - [Assertions](documentation/assertions.md)
 - [PostgreSQL](documentation/postgresql.md)
 - [Logs Spy](documentation/logs-spy.md)
+- [CORS configuration](documentation/cors-configuration.md)
 
 <!-- jhipster-needle-documentation -->
