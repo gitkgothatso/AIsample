@@ -1,0 +1,41 @@
+package com.mycompany.myapp.account.infrastructure.primary;
+
+import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api/authenticate")
+class AuthenticationResource {
+
+  private final Authenticator authenticator;
+
+  public AuthenticationResource(Authenticator authenticator) {
+    this.authenticator = authenticator;
+  }
+
+  @GetMapping
+  @Operation(description = "Get the authenticated user username")
+  public String getUsername(HttpServletRequest request) {
+    return request.getRemoteUser();
+  }
+
+  @PostMapping
+  @Operation(description = "Build an authentication token for the user")
+  public ResponseEntity<RestToken> authorize(@Valid @RequestBody RestAuthenticationQuery authenticationQuery) {
+    var token = authenticator.authenticate(authenticationQuery);
+
+    var httpHeaders = new HttpHeaders();
+    httpHeaders.add(HttpHeaders.AUTHORIZATION, token.bearer());
+
+    return new ResponseEntity<>(RestToken.from(token), httpHeaders, HttpStatus.OK);
+  }
+}

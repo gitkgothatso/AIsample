@@ -44,6 +44,11 @@ spring:
           in_clause_parameter_padding: true
   jackson:
     default-property-inclusion: non_absent
+  security:
+    user:
+      name: admin
+      password: $2a$12$cRKS9ZURbdJIaRsKDTDUmOrH4.B.2rokv8rrkrQXr2IR2Hkna484O
+      roles: ADMIN
 application:
   logging:
     logstash:
@@ -55,6 +60,12 @@ application:
         shutdown_grace_period: PT1M
   security:
     jwt-base64-secret: MTcxNDA1OTA5N2EyMjQ2NDQ3ZGM1NWUyM2Y5NTdiZDI2MTljYzI1OTI1ZDVlODM1YTY2MWUzZTllODJiNTdmYQ==
+    content-security-policy: 'default-src ''self''; frame-src ''self'' data:; script-src
+      ''self'' ''unsafe-inline'' ''unsafe-eval'' https://storage.googleapis.com; style-src
+      ''self'' ''unsafe-inline'' https://fonts.googleapis.com; img-src ''self'' data:;
+      font-src ''self'' data: https://fonts.gstatic.com;'
+    remember-me-token-validity: P365D
+    token-validity: P1D
 management:
   endpoint:
     health:

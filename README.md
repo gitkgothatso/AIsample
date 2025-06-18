@@ -51,5 +51,6 @@ docker compose -f src/main/docker/postgresql.yml up -d
 - [CORS configuration](documentation/cors-configuration.md)
 - [Cucumber](documentation/cucumber.md)
 - [Cucumber authentication](documentation/cucumber-authentication.md)
+- [JWT basic auth](documentation/jwt-basic-auth.md)
 
 <!-- jhipster-needle-documentation -->
