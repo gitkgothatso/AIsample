@@ -15,3 +15,12 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:postgresql://localhost:5432/AIsample
     username: AIsample
+application:
+  logging:
+    logstash:
+      tcp:
+        enabled: false
+        host: localhost
+        port: 5000
+        ring-buffer-size: 8192
+        shutdown_grace_period: PT1M
