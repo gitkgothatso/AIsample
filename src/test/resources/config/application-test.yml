@@ -12,3 +12,6 @@ spring:
     username: AIsample
 server:
   port: 0
+application:
+  security:
+    jwt-base64-secret: M2YzZTkzZGQ0ZmUyMmJlMWQ1Yzg3MGU2NDU0MTk2ZDQ2YTdiZTBlODUzNTI2YzQ0OGUzYjEyNjVmNzA4ZmM3ZA==
