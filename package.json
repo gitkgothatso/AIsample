@@ -12,6 +12,8 @@
     "node": ">=22"
   },
   "scripts": {
+    "e2e": "cypress open --e2e --config-file src/test/webapp/e2e/cypress-config.ts",
+    "e2e:headless": "cypress run --headless --config-file src/test/webapp/e2e/cypress-config.ts",
     "test:component": "start-server-and-test dev http://localhost:9000 'cypress open --e2e --config-file src/test/webapp/component/cypress-config.ts'",
     "test:component:headless": "start-server-and-test dev http://localhost:9000 'cypress run --headless --config-file src/test/webapp/component/cypress-config.ts'",
     "dev": "npm-run-all --parallel dev:*",
