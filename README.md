@@ -45,5 +45,6 @@ docker compose -f src/main/docker/postgresql.yml up -d
 - [Package types](documentation/package-types.md)
 - [Assertions](documentation/assertions.md)
 - [PostgreSQL](documentation/postgresql.md)
+- [Logs Spy](documentation/logs-spy.md)
 
 <!-- jhipster-needle-documentation -->
