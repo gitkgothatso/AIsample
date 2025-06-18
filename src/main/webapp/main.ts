@@ -1,3 +1,4 @@
+import { authInterceptor } from './app/auth/auth.interceptor';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
@@ -15,7 +16,7 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([authInterceptor])),
     provideRouter(routes),
     importProvidersFrom([BrowserAnimationsModule]),
   ],
