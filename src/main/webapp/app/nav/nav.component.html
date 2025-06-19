@@ -1,0 +1,24 @@
+<nav class="nav-container">
+  <div class="nav-content">
+    <button class="sidebar-toggle" aria-label="Toggle sidebar">
+      <span class="material-icons">menu</span>
+    </button>
+    <div class="nav-brand">
+      <a routerLink="/dashboard" class="brand-link">AI Sample App</a>
+    </div>
+
+    @if (account(); as accountRef) {
+      <div class="nav-user">
+        <span class="user-welcome">Welcome, {{ accountRef.login }}</span>
+        <button class="logout-btn" (click)="logout()">Logout</button>
+      </div>
+    } @else {
+      <div class="nav-links">
+        <a routerLink="/login" class="nav-link" [class.active]="isActive('/login')"> Login </a>
+        <a routerLink="/register" class="nav-link" [class.active]="isActive('/register')"> Register </a>
+        <a routerLink="/activate" class="nav-link" [class.active]="isActive('/activate')"> Activate </a>
+        <a routerLink="/password-reset" class="nav-link" [class.active]="isActive('/password-reset')"> Password Reset </a>
+      </div>
+    }
+  </div>
+</nav>

@@ -1,0 +1,54 @@
+<div class="activate-container">
+  <div class="activate-card">
+    <h2>Activate Your Account</h2>
+
+    <div class="info-section" *ngIf="tokenFromUrl">
+      <div class="info-message">
+        <i class="info-icon">ℹ️</i>
+        <p>We found an activation token in the URL. You can use it to activate your account.</p>
+        <button class="btn btn-secondary" (click)="useTokenFromUrl()">Use Token from URL</button>
+      </div>
+    </div>
+
+    <form [formGroup]="activateForm" (ngSubmit)="onSubmit()" class="activate-form">
+      <div class="form-group">
+        <label for="activationToken">Activation Token</label>
+        <input
+          type="text"
+          id="activationToken"
+          formControlName="activationToken"
+          class="form-control"
+          placeholder="Enter your activation token"
+        />
+        <div class="error-message" *ngIf="activateForm.get('activationToken')?.invalid && activateForm.get('activationToken')?.touched">
+          <span *ngIf="activateForm.get('activationToken')?.errors?.['required']">Activation token is required</span>
+        </div>
+      </div>
+
+      <div class="error-message" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+
+      <div class="success-message" *ngIf="successMessage">
+        {{ successMessage }}
+      </div>
+
+      <button type="submit" class="btn btn-primary" [disabled]="activateForm.invalid || loading">
+        <span *ngIf="loading">Activating...</span>
+        <span *ngIf="!loading">Activate Account</span>
+      </button>
+    </form>
+
+    <div class="help-section">
+      <h3>Need Help?</h3>
+      <p>If you don't have an activation token:</p>
+      <ul>
+        <li>Check your email for the activation link</li>
+        <li>Make sure you've completed the registration process</li>
+        <li>Contact support if you need assistance</li>
+      </ul>
+    </div>
+
+    <div class="login-link">Already activated? <a routerLink="/login">Login here</a></div>
+  </div>
+</div>
