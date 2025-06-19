@@ -2,6 +2,8 @@ package com.mycompany.myapp.shared.authentication.infrastructure.primary;
 
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.*;
 
+import com.mycompany.myapp.account.infrastructure.secondary.CustomUserDetailsService;
+import com.mycompany.myapp.shared.authentication.domain.Role;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import java.nio.charset.StandardCharsets;
@@ -11,6 +13,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,6 +21,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -26,7 +30,6 @@ import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWrite
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
-import com.mycompany.myapp.shared.authentication.domain.Role;
 
 @Configuration
 @EnableWebSecurity
@@ -50,9 +53,23 @@ class SecurityConfiguration {
   }
 
   @Bean
-  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+  public UserDetailsService userDetailsService(CustomUserDetailsService customUserDetailsService) {
+    return customUserDetailsService;
+  }
+
+  @Bean
+  public DaoAuthenticationProvider authenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+    DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+    provider.setUserDetailsService(userDetailsService);
+    provider.setPasswordEncoder(passwordEncoder);
+    return provider;
+  }
+
+  @Bean
+  public SecurityFilterChain filterChain(HttpSecurity http, DaoAuthenticationProvider authenticationProvider) throws Exception {
     // @formatter:off
     http
+      .authenticationProvider(authenticationProvider)
       .csrf(csrf -> csrf.disable())
       .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
       .headers(headers -> headers
@@ -74,6 +91,21 @@ class SecurityConfiguration {
         .requestMatchers(antMatcher("/swagger-ui.html")).permitAll()
         .requestMatchers(antMatcher("/v3/api-docs/**")).permitAll()
         .requestMatchers(antMatcher("/test/**")).permitAll()
+        .requestMatchers(antMatcher("/")).permitAll()
+        .requestMatchers(antMatcher("/login")).permitAll()
+        .requestMatchers(antMatcher("/register")).permitAll()
+        .requestMatchers(antMatcher("/activate")).permitAll()
+        .requestMatchers(antMatcher("/password-reset")).permitAll()
+        .requestMatchers(antMatcher("/index.html")).permitAll()
+        .requestMatchers(antMatcher("/*.js")).permitAll()
+        .requestMatchers(antMatcher("/*.css")).permitAll()
+        .requestMatchers(antMatcher("/*.ico")).permitAll()
+        .requestMatchers(antMatcher("/*.png")).permitAll()
+        .requestMatchers(antMatcher("/*.svg")).permitAll()
+        .requestMatchers(antMatcher("/*.woff")).permitAll()
+        .requestMatchers(antMatcher("/*.woff2")).permitAll()
+        .requestMatchers(antMatcher("/assets/**")).permitAll()
+        .requestMatchers(antMatcher(HttpMethod.POST,"/api/authenticate")).permitAll()
         .requestMatchers(new MvcRequestMatcher(introspector, "/api/authenticate")).permitAll()
         .requestMatchers(new MvcRequestMatcher(introspector, "/api/register")).permitAll()
         .requestMatchers(new MvcRequestMatcher(introspector, "/api/activate")).permitAll()

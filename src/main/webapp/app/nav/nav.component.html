@@ -1,0 +1,48 @@
+<nav class="nav-container">
+  <div class="nav-content">
+    <button class="sidebar-toggle" aria-label="Toggle menu" (click)="toggleMobileDrawer()">
+      <span class="material-icons">menu</span>
+    </button>
+    <div class="nav-brand">
+      <a routerLink="/dashboard" class="brand-link">AI Sample App</a>
+    </div>
+
+    <!-- Desktop navigation -->
+    <div class="nav-links">
+      @if (account(); as accountRef) {
+        <div class="nav-user">
+          <span class="user-welcome">Welcome, {{ accountRef.login }}</span>
+          <button class="logout-btn" (click)="logout()">Logout</button>
+        </div>
+      } @else {
+        <a routerLink="/login" class="nav-link" [class.active]="isActive('/login')"> Login </a>
+        <a routerLink="/register" class="nav-link" [class.active]="isActive('/register')"> Register </a>
+        <a routerLink="/activate" class="nav-link" [class.active]="isActive('/activate')"> Activate </a>
+        <a routerLink="/password-reset" class="nav-link" [class.active]="isActive('/password-reset')"> Password Reset </a>
+      }
+    </div>
+  </div>
+
+  <!-- Mobile drawer overlay -->
+  <div class="mobile-drawer-backdrop" *ngIf="mobileDrawerOpen()" (click)="closeMobileDrawer()"></div>
+  <div class="mobile-drawer" *ngIf="mobileDrawerOpen()">
+    <div class="mobile-drawer-content">
+      <button class="drawer-close-btn" (click)="closeMobileDrawer()" aria-label="Close menu">
+        <span class="material-icons">close</span>
+      </button>
+      @if (account(); as accountRef) {
+        <div class="nav-user">
+          <span class="user-welcome">Welcome, {{ accountRef.login }}</span>
+          <button class="logout-btn" (click)="logout()">Logout</button>
+        </div>
+      } @else {
+        <a routerLink="/login" class="nav-link" [class.active]="isActive('/login')" (click)="closeMobileDrawer()"> Login </a>
+        <a routerLink="/register" class="nav-link" [class.active]="isActive('/register')" (click)="closeMobileDrawer()"> Register </a>
+        <a routerLink="/activate" class="nav-link" [class.active]="isActive('/activate')" (click)="closeMobileDrawer()"> Activate </a>
+        <a routerLink="/password-reset" class="nav-link" [class.active]="isActive('/password-reset')" (click)="closeMobileDrawer()">
+          Password Reset
+        </a>
+      }
+    </div>
+  </div>
+</nav>

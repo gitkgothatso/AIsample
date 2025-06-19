@@ -1,5 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { Account } from '../auth/account.model';
 import { AccountService } from '../auth/account.service';
@@ -12,7 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 @Component({
   selector: 'jhi-login',
   templateUrl: './login.component.html',
-  imports: [MatButtonModule, MatInputModule, MatCardModule, ReactiveFormsModule],
+  imports: [CommonModule, MatButtonModule, MatInputModule, MatCardModule, ReactiveFormsModule],
   styleUrl: './login.component.css',
 })
 export default class LoginComponent implements OnInit {
@@ -27,6 +29,7 @@ export default class LoginComponent implements OnInit {
   private readonly accountService = inject(AccountService);
   private readonly loginService = inject(LoginService);
   private readonly fb = inject(FormBuilder);
+  private readonly router = inject(Router);
 
   constructor() {
     this.loginForm = this.fb.nonNullable.group({
@@ -54,6 +57,9 @@ export default class LoginComponent implements OnInit {
         password: this.loginForm.value.password!,
       })
       .subscribe({
+        next: () => {
+          this.router.navigate(['/dashboard']);
+        },
         error: e => this.updateErrorMessage(e),
       });
   }
