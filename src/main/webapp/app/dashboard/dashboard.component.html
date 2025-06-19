@@ -2,10 +2,10 @@
   <aside class="sidebar" [class.closed]="!sidebarOpen()">
     <div class="sidebar-header">Dashboard</div>
     <nav class="sidebar-nav">
-      <a routerLink="/dashboard" routerLinkActive="active">Home</a>
-      <a routerLink="/profile" routerLinkActive="active">Profile</a>
-      <a routerLink="/settings" routerLinkActive="active">Settings</a>
-      <a routerLink="/login" routerLinkActive="active">Logout</a>
+      <a routerLink="/dashboard" routerLinkActive="active" (click)="onSidebarNavClick()">Home</a>
+      <a routerLink="/profile" routerLinkActive="active" (click)="onSidebarNavClick()">Profile</a>
+      <a routerLink="/settings" routerLinkActive="active" (click)="onSidebarNavClick()">Settings</a>
+      <a routerLink="/login" routerLinkActive="active" (click)="onSidebarNavClick()">Logout</a>
     </nav>
   </aside>
   <main class="dashboard-content">

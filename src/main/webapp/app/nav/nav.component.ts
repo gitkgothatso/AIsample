@@ -16,6 +16,7 @@ export default class NavComponent implements OnInit {
   private readonly destroy$ = new Subject<void>();
 
   account = signal<Account | null>(null);
+  mobileDrawerOpen = signal(false);
 
   private readonly accountService = inject(AccountService);
   private readonly loginService = inject(LoginService);
@@ -39,9 +40,18 @@ export default class NavComponent implements OnInit {
   logout(): void {
     this.loginService.logout();
     this.router.navigate(['/login']);
+    this.closeMobileDrawer();
   }
 
   isActive(path: string): boolean {
     return this.router.url === path;
+  }
+
+  toggleMobileDrawer(): void {
+    this.mobileDrawerOpen.update(open => !open);
+  }
+
+  closeMobileDrawer(): void {
+    this.mobileDrawerOpen.set(false);
   }
 }
