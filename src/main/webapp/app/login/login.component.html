@@ -1,25 +1,34 @@
-<mat-card appearance="raised">
-  <mat-card-content>
-    @if (account(); as accountRef) {
-      <div>
-        <div>{{ `You are logged in as user "${accountRef.login}".` }}</div>
-        <button (click)="logout()" mat-flat-button color="primary">Logout</button>
+<div class="login-container">
+  <div class="login-card">
+    <h2>Sign In</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" formControlName="username" class="form-control" placeholder="Enter username" />
+        <div class="error-message" *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
+          <span *ngIf="loginForm.get('username')?.errors?.['required']">Username is required</span>
+        </div>
       </div>
-    } @else {
-      <form class="login-form" (ngSubmit)="login()" [formGroup]="loginForm">
-        <mat-form-field class="form-field-full-width" appearance="fill">
-          <mat-label>Login</mat-label>
-          <input type="text" name="username" id="username" formControlName="username" matInput placeholder="Login" value="" />
-        </mat-form-field>
-        <mat-form-field class="form-field-full-width" appearance="fill">
-          <mat-label>Password</mat-label>
-          <input type="password" name="password" id="password" formControlName="password" matInput placeholder="Password" value="" />
-        </mat-form-field>
-        <button type="submit" mat-flat-button color="primary">Sign in</button>
-        @if (errorMessage()) {
-          <mat-error>{{ errorMessage() }}</mat-error>
-        }
-      </form>
-    }
-  </mat-card-content>
-</mat-card>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" formControlName="password" class="form-control" placeholder="Enter password" />
+        <div class="error-message" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+          <span *ngIf="loginForm.get('password')?.errors?.['required']">Password is required</span>
+        </div>
+      </div>
+
+      <div class="error-message" *ngIf="errorMessage()">
+        {{ errorMessage() }}
+      </div>
+
+      <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Sign in</button>
+    </form>
+
+    <div class="auth-links">
+      <a routerLink="/register" class="auth-link">Create new account</a>
+      <a routerLink="/password-reset" class="auth-link">Forgot password?</a>
+    </div>
+  </div>
+</div>

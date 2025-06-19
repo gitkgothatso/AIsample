@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  maildev:
+    image: djfarrelly/maildev:latest
+    container_name: maildev-aisample
+    ports:
+      - '1025:1025' # SMTP port
+      - '1080:1080' # Web interface port
+    environmnt:
+      - MAILDEV_INCOMING_USER=admin
+      - MAILDEV_INCOMING_PASS=admin
+    restart: unless-stopped
