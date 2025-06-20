@@ -57,15 +57,15 @@ describe('Login Component', () => {
 
       expect(mockAccountService.getAuthenticationState).toHaveBeenCalled();
 
-      expect(comp.account()).toBeNull();
+      expect(comp.account()).toBe(null);
 
       authenticationState.next(account);
 
-      expect(comp.account()).toEqual(account);
+      expect(comp.account()).toStrictEqual(account);
 
       authenticationState.next(null);
 
-      expect(comp.account()).toBeNull();
+      expect(comp.account()).toBe(null);
     });
   });
 
@@ -92,7 +92,7 @@ describe('Login Component', () => {
 
       comp.login();
 
-      expect(comp.errorMessage()).toBe('Authentication failed');
+      expect(comp.errorMessage()).toBe('Authentication failed: Invalid username or password.');
     });
   });
 

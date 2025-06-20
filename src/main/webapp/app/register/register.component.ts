@@ -16,6 +16,8 @@ export class RegisterComponent {
   loading = false;
   errorMessage = '';
   successMessage = '';
+  passwordStrength = 0;
+  passwordStrengthLabel = '';
 
   constructor(
     private fb: FormBuilder,
@@ -31,6 +33,9 @@ export class RegisterComponent {
       },
       { validators: this.passwordMatchValidator },
     );
+    this.registerForm.get('password')?.valueChanges.subscribe(value => {
+      this.updatePasswordStrength(value);
+    });
   }
 
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
@@ -43,6 +48,22 @@ export class RegisterComponent {
     }
 
     return null;
+  }
+
+  updatePasswordStrength(password: string) {
+    // Simple strength logic: length + variety
+    let score = 0;
+    if (!password) {
+      this.passwordStrength = 0;
+      this.passwordStrengthLabel = '';
+      return;
+    }
+    if (password.length >= 6) score++;
+    if (/[A-Z]/.test(password)) score++;
+    if (/[0-9]/.test(password)) score++;
+    if (/[^A-Za-z0-9]/.test(password)) score++;
+    this.passwordStrength = score;
+    this.passwordStrengthLabel = score === 0 ? '' : score === 1 ? 'Weak' : score === 2 ? 'Fair' : score === 3 ? 'Good' : 'Strong';
   }
 
   onSubmit() {
@@ -63,10 +84,30 @@ export class RegisterComponent {
           this.successMessage =
             typeof response === 'string' ? response : 'Registration successful! Please check your email for activation instructions.';
           this.registerForm.reset();
+          this.passwordStrength = 0;
+          this.passwordStrengthLabel = '';
         },
         error: (error: any) => {
           this.loading = false;
-          this.errorMessage = error.error || 'Registration failed. Please try again.';
+          // Try to parse backend error for user-friendly message
+          const err =
+            error && error.error ? error.error : error && error.message ? error.message : 'Registration failed. Please try again.';
+          if (typeof err === 'string') {
+            const lower = err.toLowerCase();
+            if (lower.includes('username') && lower.includes('exist')) {
+              this.errorMessage = 'Username is already taken.';
+            } else if (lower.includes('email') && lower.includes('exist')) {
+              this.errorMessage = 'Email is already registered.';
+            } else if (lower.includes('username')) {
+              this.errorMessage = 'Username is already taken.';
+            } else if (lower.includes('email')) {
+              this.errorMessage = 'Email is already registered.';
+            } else {
+              this.errorMessage = err;
+            }
+          } else {
+            this.errorMessage = 'Registration failed. Please try again.';
+          }
         },
       });
     }

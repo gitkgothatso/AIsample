@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable, of, ReplaySubject } from 'rxjs';
 import { catchError, shareReplay, tap } from 'rxjs/operators';
 
@@ -11,7 +11,9 @@ export class AccountService {
   private readonly authenticationState = new ReplaySubject<Account | null>(1);
   private accountCache$?: Observable<Account> | null;
 
-  private readonly http = inject(HttpClient);
+  //private readonly http = inject(HttpClient);
+
+  constructor(private http: HttpClient) {}
 
   authenticate(identity: Account | null): void {
     this.userIdentity = identity;

@@ -6,7 +6,7 @@
 >
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.mycompany.myapp</groupId>
+  <groupId>com.enkitstudio.restaurant</groupId>
   <artifactId>a-isample</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>AIsample</name>
@@ -159,6 +159,11 @@
       <artifactId>spring-security-test</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>runtime</scope>
+    </dependency>
   </dependencies>
 
   <properties>
@@ -254,7 +259,7 @@
             </execution>
           </executions>
           <configuration>
-            <mainClass>com.mycompany.myapp.AIsampleApp</mainClass>
+            <mainClass>com.enkitstudio.restaurant.AIsampleApp</mainClass>
           </configuration>
         </plugin>
       </plugins>

@@ -182,3 +182,56 @@
     min-width: auto;
   }
 }
+
+/* Password strength meter */
+.password-strength {
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.strength-bar {
+  width: 60px;
+  height: 8px;
+  border-radius: 4px;
+  background: #e1e5e9;
+  margin-right: 8px;
+  transition: background 0.3s;
+}
+.strength-bar.weak {
+  background: #dc3545;
+}
+.strength-bar.fair {
+  background: #ffc107;
+}
+.strength-bar.good {
+  background: #17a2b8;
+}
+.strength-bar.strong {
+  background: #28a745;
+}
+.strength-label {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Spinner for loading state */
+.spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #fff;
+  border-top: 2px solid #667eea;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

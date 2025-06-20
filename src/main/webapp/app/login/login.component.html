@@ -19,11 +19,15 @@
         </div>
       </div>
 
-      <div class="error-message" *ngIf="errorMessage()">
+      <div class="error-message" *ngIf="errorMessage()" role="alert" aria-live="assertive">
         {{ errorMessage() }}
       </div>
 
-      <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Sign in</button>
+      <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid || loading()" [attr.aria-busy]="loading()">
+        <span *ngIf="loading()" class="spinner" aria-label="Signing in"></span>
+        <span *ngIf="loading()">Signing in...</span>
+        <span *ngIf="!loading()">Sign in</span>
+      </button>
     </form>
 
     <div class="auth-links">

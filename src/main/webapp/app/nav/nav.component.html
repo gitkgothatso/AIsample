@@ -15,16 +15,48 @@
           <button class="logout-btn" (click)="logout()">Logout</button>
         </div>
       } @else {
-        <a routerLink="/login" class="nav-link" [class.active]="isActive('/login')"> Login </a>
-        <a routerLink="/register" class="nav-link" [class.active]="isActive('/register')"> Register </a>
-        <a routerLink="/activate" class="nav-link" [class.active]="isActive('/activate')"> Activate </a>
-        <a routerLink="/password-reset" class="nav-link" [class.active]="isActive('/password-reset')"> Password Reset </a>
+        <a routerLink="/login" class="nav-link" [class.active]="isActive('/login')" tabindex="0" (keydown.enter)="closeMobileDrawer()">
+          Login
+        </a>
+        <a
+          routerLink="/register"
+          class="nav-link"
+          [class.active]="isActive('/register')"
+          tabindex="0"
+          (keydown.enter)="closeMobileDrawer()"
+        >
+          Register
+        </a>
+        <a
+          routerLink="/activate"
+          class="nav-link"
+          [class.active]="isActive('/activate')"
+          tabindex="0"
+          (keydown.enter)="closeMobileDrawer()"
+        >
+          Activate
+        </a>
+        <a
+          routerLink="/password-reset"
+          class="nav-link"
+          [class.active]="isActive('/password-reset')"
+          tabindex="0"
+          (keydown.enter)="closeMobileDrawer()"
+        >
+          Password Reset
+        </a>
       }
     </div>
   </div>
 
   <!-- Mobile drawer overlay -->
-  <div class="mobile-drawer-backdrop" *ngIf="mobileDrawerOpen()" (click)="closeMobileDrawer()"></div>
+  <div
+    class="mobile-drawer-backdrop"
+    *ngIf="mobileDrawerOpen()"
+    (click)="closeMobileDrawer()"
+    tabindex="0"
+    (keydown.enter)="closeMobileDrawer()"
+  ></div>
   <div class="mobile-drawer" *ngIf="mobileDrawerOpen()">
     <div class="mobile-drawer-content">
       <button class="drawer-close-btn" (click)="closeMobileDrawer()" aria-label="Close menu">
@@ -36,10 +68,44 @@
           <button class="logout-btn" (click)="logout()">Logout</button>
         </div>
       } @else {
-        <a routerLink="/login" class="nav-link" [class.active]="isActive('/login')" (click)="closeMobileDrawer()"> Login </a>
-        <a routerLink="/register" class="nav-link" [class.active]="isActive('/register')" (click)="closeMobileDrawer()"> Register </a>
-        <a routerLink="/activate" class="nav-link" [class.active]="isActive('/activate')" (click)="closeMobileDrawer()"> Activate </a>
-        <a routerLink="/password-reset" class="nav-link" [class.active]="isActive('/password-reset')" (click)="closeMobileDrawer()">
+        <a
+          routerLink="/login"
+          class="nav-link"
+          [class.active]="isActive('/login')"
+          (click)="closeMobileDrawer()"
+          tabindex="0"
+          (keydown.enter)="closeMobileDrawer()"
+        >
+          Login
+        </a>
+        <a
+          routerLink="/register"
+          class="nav-link"
+          [class.active]="isActive('/register')"
+          (click)="closeMobileDrawer()"
+          tabindex="0"
+          (keydown.enter)="closeMobileDrawer()"
+        >
+          Register
+        </a>
+        <a
+          routerLink="/activate"
+          class="nav-link"
+          [class.active]="isActive('/activate')"
+          (click)="closeMobileDrawer()"
+          tabindex="0"
+          (keydown.enter)="closeMobileDrawer()"
+        >
+          Activate
+        </a>
+        <a
+          routerLink="/password-reset"
+          class="nav-link"
+          [class.active]="isActive('/password-reset')"
+          (click)="closeMobileDrawer()"
+          tabindex="0"
+          (keydown.enter)="closeMobileDrawer()"
+        >
           Password Reset
         </a>
       }

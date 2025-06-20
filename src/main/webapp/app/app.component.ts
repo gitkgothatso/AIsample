@@ -7,9 +7,10 @@ import NavComponent from './nav/nav.component';
   templateUrl: './app.component.html',
   imports: [RouterModule, NavComponent],
   styleUrl: './app.component.css',
+  standalone: true,
 })
 export class AppComponent implements OnInit {
-  appName = signal('');
+  appName = signal('AIsample');
 
   ngOnInit(): void {
     this.appName.set('AIsample');

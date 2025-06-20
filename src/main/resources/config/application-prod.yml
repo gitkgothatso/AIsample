@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://prod-db-host:5432/prod_db
+    username: prod_user
+    password: prod_password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+  mail:
+    host: smtp.example.com
+    port: 587
+    username: prod_mail_user
+    password: prod_mail_password
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    protocol: smtp
+    test-connection: false
+logging:
+  level:
+    com:
+      enkitstudio:
+        restaurant: INFO
+application:
+  security:
+    jwt-base64-secret: cHJvZC1qd3Qtc2VjcmV0LXN1cGVyLXN0cm9uZy1jaGFuZ2UtbWU=

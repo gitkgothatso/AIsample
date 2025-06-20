@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/AISampleApp
+    username: TrySample
+    password: 'TrySample'
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+  flyway:
+    enabled: true
+  mail:
+    host: localhost
+    port: 25
+    username:
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+    protocol: smtp
+    test-connection: false
+logging:
+  level:
+    com:
+      enkitstudio:
+        restaurant: DEBUG
+application:
+  security:
+    jwt-base64-secret: MTcxNDA1OTA5N2EyMjQ2NDQ3ZGM1NWUyM2Y5NTdiZDI2MTljYzI1OTI1ZDVlODM1YTY2MWUzZTllODJiNTdmYQ==

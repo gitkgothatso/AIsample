@@ -23,6 +23,7 @@ export default class LoginComponent implements OnInit {
   account = signal<Account | null>(null);
 
   errorMessage = signal('');
+  loading = signal(false);
 
   loginForm: FormGroup;
 
@@ -51,6 +52,8 @@ export default class LoginComponent implements OnInit {
   }
 
   login(): void {
+    this.loading.set(true);
+    this.errorMessage.set('');
     this.loginService
       .login({
         username: this.loginForm.value.username!,
@@ -58,9 +61,13 @@ export default class LoginComponent implements OnInit {
       })
       .subscribe({
         next: () => {
+          this.loading.set(false);
           this.router.navigate(['/dashboard']);
         },
-        error: e => this.updateErrorMessage(e),
+        error: e => {
+          this.loading.set(false);
+          this.updateErrorMessage(e);
+        },
       });
   }
 
@@ -69,8 +76,14 @@ export default class LoginComponent implements OnInit {
   }
 
   private updateErrorMessage(e: any) {
-    if (e.status === 403) {
-      this.errorMessage.set('Authentication failed');
+    if (e && e.status === 403) {
+      this.errorMessage.set('Authentication failed: Invalid username or password.');
+    } else if (e && e.error && typeof e.error === 'string') {
+      this.errorMessage.set(e.error);
+    } else if (e && e.message) {
+      this.errorMessage.set(e.message);
+    } else {
+      this.errorMessage.set('Login failed. Please try again.');
     }
   }
 }
