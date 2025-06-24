@@ -4,12 +4,13 @@ import { Subject, takeUntil } from 'rxjs';
 import { Account } from '../auth/account.model';
 import { AccountService } from '../auth/account.service';
 import { LoginService } from '../login/login.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'jhi-nav',
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css'],
-  imports: [RouterModule],
+  imports: [RouterModule, CommonModule],
   standalone: true,
 })
 export default class NavComponent implements OnInit {
@@ -31,6 +32,9 @@ export default class NavComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Validate any existing JWT token on app startup
+    this.accountService.identity().subscribe();
+    
     this.accountService
       .getAuthenticationState()
       .pipe(takeUntil(this.destroy$))

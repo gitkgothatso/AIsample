@@ -56,4 +56,12 @@ export class AccountService {
   private fetch(): Observable<Account> {
     return this.http.get<Account>('api/account');
   }
+
+  updateProfile(profile: { firstName: string; lastName: string; email: string }): Observable<string> {
+    return this.http.put('api/account', profile, { responseType: 'text' });
+  }
+
+  changePassword(passwords: { currentPassword: string; newPassword: string }): Observable<string> {
+    return this.http.post('api/account/change-password', passwords, { responseType: 'text' });
+  }
 }

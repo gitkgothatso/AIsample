@@ -30,6 +30,8 @@ public class TestAccountResource {
     dto.setUsername(req.getUsername());
     dto.setEmail(req.getEmail());
     dto.setPassword(req.getPassword());
+    dto.setFirstName(req.getFirstName());
+    dto.setLastName(req.getLastName());
     String activationToken = accountService.registerUser(dto);
     if (req.isActivated()) {
       accountService.activateAccount(activationToken);
@@ -55,6 +57,8 @@ public class TestAccountResource {
     private String email;
     private String password;
     private boolean activated;
+    private String firstName;
+    private String lastName;
 
     public String getUsername() {
       return username;
@@ -86,6 +90,22 @@ public class TestAccountResource {
 
     public void setActivated(boolean activated) {
       this.activated = activated;
+    }
+
+    public String getFirstName() {
+      return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+      this.firstName = firstName;
+    }
+
+    public String getLastName() {
+      return lastName;
+    }
+
+    public void setLastName(String lastName) {
+      this.lastName = lastName;
     }
   }
 }

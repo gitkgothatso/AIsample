@@ -3,6 +3,7 @@ logging:
     com:
       mycompany:
         myapp: INFO
+    org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer: ERROR
 spring:
   application:
     name: AIsample

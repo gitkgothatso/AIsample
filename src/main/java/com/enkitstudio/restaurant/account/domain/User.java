@@ -26,12 +26,24 @@ public class User {
   private String activationToken;
   private String resetToken;
 
+  /**
+   * First name of the user.
+   */
+  private String firstName;
+
+  /**
+   * Last name of the user.
+   */
+  private String lastName;
+
   public User() {}
 
-  public User(String username, String email, String password) {
+  public User(String username, String email, String password, String firstName, String lastName) {
     this.username = username;
     this.email = email;
     this.password = password;
+    this.firstName = firstName;
+    this.lastName = lastName;
     this.activated = false;
     this.activationToken = UUID.randomUUID().toString();
   }
@@ -87,5 +99,21 @@ public class User {
 
   public void setResetToken(String resetToken) {
     this.resetToken = resetToken;
+  }
+
+  public String getFirstName() {
+    return firstName;
+  }
+
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
+  public String getLastName() {
+    return lastName;
+  }
+
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
   }
 }

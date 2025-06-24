@@ -2,10 +2,9 @@
   <aside class="sidebar" [class.closed]="!sidebarOpen()">
     <div class="sidebar-header">Dashboard</div>
     <nav class="sidebar-nav">
-      <a routerLink="/dashboard" routerLinkActive="active" (click)="onSidebarNavClick()">Home</a>
-      <a routerLink="/profile" routerLinkActive="active" (click)="onSidebarNavClick()">Profile</a>
-      <a routerLink="/settings" routerLinkActive="active" (click)="onSidebarNavClick()">Settings</a>
-      <a routerLink="/login" routerLinkActive="active" (click)="onSidebarNavClick()">Logout</a>
+      <a (click)="goTo('/dashboard')" routerLinkActive="active">Home</a>
+      <a (click)="goTo('/profile')">Profile</a>
+      <a (click)="logout()" style="cursor:pointer;">Logout</a>
     </nav>
   </aside>
   <main class="dashboard-content">
@@ -16,17 +15,22 @@
       <h1>Welcome to your Dashboard!</h1>
     </div>
     <div class="dashboard-body">
-      <p>This is your main landing page after login.</p>
-      <div class="dashboard-cards">
-        <div class="card">
-          <h3>Quick Stats</h3>
-          <p>Your dashboard statistics will appear here.</p>
+      <ng-container *ngIf="showProfile(); else dashboardHome">
+        <jhi-profile></jhi-profile>
+      </ng-container>
+      <ng-template #dashboardHome>
+        <p>This is your main landing page after login.</p>
+        <div class="dashboard-cards">
+          <div class="card">
+            <h3>Quick Stats</h3>
+            <p>Your dashboard statistics will appear here.</p>
+          </div>
+          <div class="card">
+            <h3>Recent Activity</h3>
+            <p>Your recent activities will be displayed here.</p>
+          </div>
         </div>
-        <div class="card">
-          <h3>Recent Activity</h3>
-          <p>Your recent activities will be displayed here.</p>
-        </div>
-      </div>
+      </ng-template>
     </div>
   </main>
 </div>

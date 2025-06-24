@@ -22,11 +22,14 @@ spring:
             enable: false
     protocol: smtp
     test-connection: false
+    # Disable email sending for tests
+    enabled: false
 logging:
   level:
     com:
       enkitstudio:
         restaurant: WARN
+    org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer: ERROR
 application:
   security:
     jwt-base64-secret: dGVzdC1qd3Qtc2VjcmV0LXRlc3Qtc2VjcmV0LXRlc3Qtc2VjcmV0LXRlc3Qtc2VjcmV0LXRlc3Q=

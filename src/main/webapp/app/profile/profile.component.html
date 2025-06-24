@@ -1,0 +1,102 @@
+<div class="profile-container">
+  <div class="profile-card">
+    <h2>Profile</h2>
+    <form [formGroup]="profileForm" (ngSubmit)="onSaveProfile()" class="profile-form">
+      <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input id="firstName" type="text" formControlName="firstName" class="form-control" />
+        <div class="error-message" *ngIf="profileForm.get('firstName')?.invalid && profileForm.get('firstName')?.touched">
+          <span *ngIf="profileForm.get('firstName')?.errors?.['required']">First name is required</span>
+          <span *ngIf="profileForm.get('firstName')?.errors?.['maxlength']">Max 50 characters</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input id="lastName" type="text" formControlName="lastName" class="form-control" />
+        <div class="error-message" *ngIf="profileForm.get('lastName')?.invalid && profileForm.get('lastName')?.touched">
+          <span *ngIf="profileForm.get('lastName')?.errors?.['required']">Last name is required</span>
+          <span *ngIf="profileForm.get('lastName')?.errors?.['maxlength']">Max 50 characters</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input id="email" type="email" formControlName="email" class="form-control" />
+        <div class="error-message" *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched">
+          <span *ngIf="profileForm.get('email')?.errors?.['required']">Email is required</span>
+          <span *ngIf="profileForm.get('email')?.errors?.['email']">Invalid email</span>
+        </div>
+      </div>
+      <div class="success-message" *ngIf="successMessage" role="alert">{{ successMessage }}</div>
+      <div class="error-message" *ngIf="errorMessage" role="alert">{{ errorMessage }}</div>
+      <button type="submit" class="btn btn-primary" [disabled]="profileForm.invalid || loading" [attr.aria-busy]="loading">
+        <span *ngIf="loading">Saving...</span>
+        <span *ngIf="!loading">Save Profile</span>
+      </button>
+    </form>
+  </div>
+
+  <div class="profile-card">
+    <h2>Change Password</h2>
+    <form [formGroup]="passwordForm" (ngSubmit)="onChangePassword()" class="password-form">
+      <div class="form-group">
+        <label for="currentPassword">Current Password</label>
+        <input id="currentPassword" type="password" formControlName="currentPassword" class="form-control" />
+        <div class="error-message" *ngIf="passwordForm.get('currentPassword')?.invalid && passwordForm.get('currentPassword')?.touched">
+          <span *ngIf="passwordForm.get('currentPassword')?.errors?.['required']">Current password is required</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="newPassword">New Password</label>
+        <input id="newPassword" type="password" formControlName="newPassword" class="form-control" />
+        
+        <!-- Password Strength Indicator -->
+        <div class="password-strength" *ngIf="passwordForm.get('newPassword')?.value">
+          <div class="strength-bar">
+            <div class="strength-fill" [style.width.%]="passwordStrength" [style.background-color]="getPasswordStrengthColor()"></div>
+          </div>
+          <span class="strength-text" [style.color]="getPasswordStrengthColor()">{{ getPasswordStrengthText() }}</span>
+        </div>
+
+        <!-- Password Requirements -->
+        <div class="password-requirements" *ngIf="passwordForm.get('newPassword')?.value">
+          <h4>Password Requirements:</h4>
+          <ul class="requirements-list">
+            <li [class.met]="passwordRequirements.length" [class.not-met]="!passwordRequirements.length">
+              <span class="requirement-icon">{{ passwordRequirements.length ? '✓' : '✗' }}</span>
+              At least 8 characters long
+            </li>
+            <li [class.met]="passwordRequirements.uppercase" [class.not-met]="!passwordRequirements.uppercase">
+              <span class="requirement-icon">{{ passwordRequirements.uppercase ? '✓' : '✗' }}</span>
+              One uppercase letter (A-Z)
+            </li>
+            <li [class.met]="passwordRequirements.lowercase" [class.not-met]="!passwordRequirements.lowercase">
+              <span class="requirement-icon">{{ passwordRequirements.lowercase ? '✓' : '✗' }}</span>
+              One lowercase letter (a-z)
+            </li>
+            <li [class.met]="passwordRequirements.digit" [class.not-met]="!passwordRequirements.digit">
+              <span class="requirement-icon">{{ passwordRequirements.digit ? '✓' : '✗' }}</span>
+              One number (0-9)
+            </li>
+            <li [class.met]="passwordRequirements.special" [class.not-met]="!passwordRequirements.special">
+              <span class="requirement-icon">{{ passwordRequirements.special ? '✓' : '✗' }}</span>
+              One special character (!&#64;#$%^&*...)
+            </li>
+          </ul>
+        </div>
+
+        <div class="error-message" *ngIf="passwordForm.get('newPassword')?.invalid && passwordForm.get('newPassword')?.touched">
+          <span *ngIf="passwordForm.get('newPassword')?.errors?.['required']">New password is required</span>
+          <span *ngIf="passwordForm.get('newPassword')?.errors?.['minlength']">Password must be at least 8 characters</span>
+          <span *ngIf="passwordForm.get('newPassword')?.errors?.['passwordComplexity']">Password must meet all requirements above</span>
+        </div>
+      </div>
+      
+      <div class="success-message" *ngIf="passwordSuccess" role="alert">{{ passwordSuccess }}</div>
+      <div class="error-message" *ngIf="passwordError" role="alert">{{ passwordError }}</div>
+      <button type="submit" class="btn btn-primary" [disabled]="passwordForm.invalid || passwordLoading" [attr.aria-busy]="passwordLoading">
+        <span *ngIf="passwordLoading">Changing...</span>
+        <span *ngIf="!passwordLoading">Change Password</span>
+      </button>
+    </form>
+  </div>
+</div> 

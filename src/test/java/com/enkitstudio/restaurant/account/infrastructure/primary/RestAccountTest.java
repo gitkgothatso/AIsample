@@ -12,7 +12,8 @@ class RestAccountTest {
 
   @Test
   void shouldSerializeToJson() {
-    assertThat(JsonHelper.writeAsString(new RestAccount("user", Set.of("ROLE_USER")))).isEqualTo(json());
+    assertThat(JsonHelper.writeAsString(new RestAccount("user", Set.of("ROLE_USER"), "TestFirst", "TestLast", "user@example.com")))
+      .isEqualTo(json());
   }
 
   private String json() {
@@ -21,7 +22,10 @@ class RestAccountTest {
     "login":"user",\
     "authorities":[\
     "ROLE_USER"\
-    ]\
+    ],\
+    "firstName":"TestFirst",\
+    "lastName":"TestLast",\
+    "email":"user@example.com"\
     }\
     """;
   }

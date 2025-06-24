@@ -3,6 +3,7 @@ package com.enkitstudio.restaurant.account.application;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import com.enkitstudio.restaurant.account.application.validation.PasswordComplexity;
 
 public class RegistrationDTO {
 
@@ -15,8 +16,12 @@ public class RegistrationDTO {
   private String email;
 
   @NotBlank
-  @Size(min = 6, max = 100)
+  @Size(min = 8, max = 100)
+  @PasswordComplexity
   private String password;
+
+  private String firstName;
+  private String lastName;
 
   public RegistrationDTO() {}
 
@@ -42,5 +47,21 @@ public class RegistrationDTO {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public String getFirstName() {
+    return firstName;
+  }
+
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
+  public String getLastName() {
+    return lastName;
+  }
+
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
   }
 }

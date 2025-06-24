@@ -1,0 +1,278 @@
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  background: #f4f6fa;
+  padding: 20px;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.profile-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  width: 100%;
+  max-width: 500px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.profile-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.profile-card h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 24px;
+  font-weight: 600;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.profile-form,
+.password-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.form-control {
+  padding: 12px 16px;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 5px;
+  min-height: 16px;
+}
+
+.success-message {
+  color: #28a745;
+  font-size: 14px;
+  padding: 10px;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@media (max-width: 768px) {
+  .profile-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .profile-card {
+    max-width: 100%;
+    margin: 0 10px;
+  }
+}
+
+/* Password Strength Indicator */
+.password-strength {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.strength-bar {
+  flex: 1;
+  height: 6px;
+  background-color: #e1e5e9;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.strength-fill {
+  height: 100%;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.strength-text {
+  font-size: 12px;
+  font-weight: 500;
+  min-width: 50px;
+}
+
+/* Password Requirements */
+.password-requirements {
+  margin-top: 15px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+}
+
+.password-requirements h4 {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  color: #333;
+  font-weight: 600;
+}
+
+.password-requirements ul {
+  margin: 0;
+  padding-left: 20px;
+  list-style: none;
+}
+
+.password-requirements li {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 5px;
+  position: relative;
+  padding-left: 20px;
+}
+
+.password-requirements li::before {
+  content: '✗';
+  position: absolute;
+  left: 0;
+  color: #dc3545;
+  font-weight: bold;
+}
+
+.password-requirements li.met::before {
+  content: '✓';
+  color: #28a745;
+}
+
+.password-requirements li.met {
+  color: #28a745;
+  font-weight: 500;
+}
+
+/* Enhanced Password Requirements */
+.requirements-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.requirements-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: #6c757d;
+  transition: color 0.2s ease;
+  padding-left: 0;
+}
+
+.requirements-list li.met {
+  color: #28a745;
+}
+
+.requirements-list li.not-met {
+  color: #dc3545;
+}
+
+.requirement-icon {
+  margin-right: 8px;
+  font-weight: bold;
+  font-size: 14px;
+  width: 16px;
+  text-align: center;
+}
+
+.requirements-list li.met .requirement-icon {
+  color: #28a745;
+}
+
+.requirements-list li.not-met .requirement-icon {
+  color: #dc3545;
+}
+
+/* Enhanced Error Messages */
+.error-message::before {
+  content: '⚠ ';
+  margin-right: 4px;
+  font-weight: bold;
+}
+
+.success-message::before {
+  content: '✓ ';
+  margin-right: 8px;
+  font-weight: bold;
+}
+
+/* Loading States */
+.btn[aria-busy="true"] {
+  position: relative;
+  color: transparent;
+}
+
+.btn[aria-busy="true"]::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+} 

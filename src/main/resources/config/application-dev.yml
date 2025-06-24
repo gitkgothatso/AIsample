@@ -22,6 +22,8 @@ spring:
             enable: false
     protocol: smtp
     test-connection: false
+    # Disable email sending for development
+    enabled: false
 logging:
   level:
     com:

@@ -9,6 +9,7 @@ import com.enkitstudio.restaurant.shared.email.application.EmailService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @Service
 public class AccountApplicationService {
@@ -42,7 +43,7 @@ public class AccountApplicationService {
     if (users.findByEmail(dto.getEmail()).isPresent()) {
       throw new IllegalArgumentException("Email already exists");
     }
-    User user = new User(dto.getUsername(), dto.getEmail(), passwordEncoder.encode(dto.getPassword()));
+    User user = new User(dto.getUsername(), dto.getEmail(), passwordEncoder.encode(dto.getPassword()), dto.getFirstName() != null ? dto.getFirstName() : "", dto.getLastName() != null ? dto.getLastName() : "");
     users.save(user);
 
     // Send registration email
@@ -92,6 +93,46 @@ public class AccountApplicationService {
     var user = userOpt.get();
     user.setPassword(passwordEncoder.encode(newPassword));
     user.setResetToken(null);
+    users.save(user);
+  }
+
+  /**
+   * Update the profile of the current user (first name, last name, email).
+   * Part of the hexagonal architecture: application service orchestrates domain logic.
+   */
+  @Transactional
+  public void updateProfile(ProfileUpdateDTO dto) {
+    String username = SecurityContextHolder.getContext().getAuthentication().getName();
+    var userOpt = users.findByUsername(username);
+    if (userOpt.isEmpty()) {
+      throw new IllegalArgumentException("User not found");
+    }
+    var user = userOpt.get();
+    if (!user.getEmail().equals(dto.getEmail()) && users.findByEmail(dto.getEmail()).isPresent()) {
+      throw new IllegalArgumentException("Email already exists");
+    }
+    user.setEmail(dto.getEmail());
+    user.setFirstName(dto.getFirstName());
+    user.setLastName(dto.getLastName());
+    users.save(user);
+  }
+
+  /**
+   * Change the password of the current user.
+   * Part of the hexagonal architecture: application service orchestrates domain logic.
+   */
+  @Transactional
+  public void changePassword(PasswordChangeDTO dto) {
+    String username = SecurityContextHolder.getContext().getAuthentication().getName();
+    var userOpt = users.findByUsername(username);
+    if (userOpt.isEmpty()) {
+      throw new IllegalArgumentException("User not found");
+    }
+    var user = userOpt.get();
+    if (!passwordEncoder.matches(dto.getCurrentPassword(), user.getPassword())) {
+      throw new IllegalArgumentException("Current password is incorrect");
+    }
+    user.setPassword(passwordEncoder.encode(dto.getNewPassword()));
     users.save(user);
   }
 }
